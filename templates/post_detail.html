@@ -1,0 +1,28 @@
+{% extends 'base.html'%} 
+
+{% block content%}
+
+
+    <h1>{{ post.title}}</h1>
+    <p>{{ post.content}}</p>
+
+
+    <form action="{% url 'post-delete' post.id %}" method="post">{% csrf_token %}
+        <button type="submit">Удалить пост</button>
+    </form>
+
+    <form action="{% url 'post-update' post.id %}" method="get">{% csrf_token %}
+        <button type="submit">Редактировать пост</button>
+    </form>
+
+
+<a href="{% url 'about-page' %}">О нас</a>
+<br>
+<a href="{% url 'contacts' %}">Наши контакты</a>
+<br>
+<a href="{% url 'main-page' %}">На главную</a>
+
+
+{% endblock %}    
+    
+

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>
+    Наши номера:
+</h1>
+
+
+<ul>
+    <li>0550456503</li>
+    <li>0777787799</li>
+    <li>0555565758</li>
+</ul>
+
+
+<a href="{% url 'main-page' %}">На главную</a>
+<br>
+<a href="{% url 'about-page' %}">О нас</a>
+
+{% endblock %}
