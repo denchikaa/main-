@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import generic
-from django.http import HttpResponse , Http404
-from posts.models import Post, Comment 
+from posts.models import Post
 from django.urls import reverse_lazy
-import datetime
 from posts.forms import CommentForm, PostForm
 
 class IndexView(generic.ListView):
@@ -67,30 +65,6 @@ class PostUpdateView(generic.UpdateView):
     success_url = reverse_lazy("main-page")
     form_class = PostForm
 
-
-def hello(request):
-    return HttpResponse("GeekTech", status=200, headers={"name": "Mongol"})      
-
-
-def time(request):
-    ted = datetime.datetime.now()
-    return HttpResponse(ted)
-
-def goodbye(request):
-    return HttpResponse("Goodbye!")    
-    
-
-def about(request):
-    context = {
-        "title": "О нас"
-    }
-    return render(request, "about.html")  
-
-def contacts(request):
-    context = {
-        "title": "Контакты"
-    }    
-    return render(request, "contacts.html", context)
 
 
 class AboutView(generic.TemplateView):
