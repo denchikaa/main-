@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.http import HttpResponse , Http404
-from posts.models import Post 
+from posts.models import Post, Comment 
 from django.urls import reverse_lazy
 import datetime
-
+from posts.forms import CommentForm, PostForm
 
 class IndexView(generic.ListView):
     model = Post
@@ -18,6 +18,34 @@ class PostDetailView(generic.DetailView):
     model = Post
     context_object_name = "post"
     template_name = "post_detail.html"
+    extra_context = {"form":CommentForm}
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["form"] = CommentForm()
+    #     return context
+
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            pre_saved_comment = form.save(commit=False)
+            pre_saved_comment.post = post
+            pre_saved_comment.save()
+
+        return redirect("post-detail", pk)    
+
+
+    # def post(self, request, pk):   
+    #     post = Post.objects.get(pk=pk)
+    #     name = request.POST.get("name", None)
+    #     text = request.POST.get("text", None)   
+
+    #     if name and text:
+    #         comment = Comment.objects.create(name=name, text=text, post=post) 
+    #         comment.save()
+    #     return redirect("post-detail",pk)
 
 
 class PostCreateView(generic.CreateView):
@@ -37,6 +65,7 @@ class PostUpdateView(generic.UpdateView):
     template_name = "post_update.html"
     fields = ["title", "content"]
     success_url = reverse_lazy("main-page")
+    form_class = PostForm
 
 
 def hello(request):
@@ -64,7 +93,13 @@ def contacts(request):
     return render(request, "contacts.html", context)
 
 
+class AboutView(generic.TemplateView):
+    template_name = "about.html"
+    success_url = reverse_lazy("about-page")
 
+class ContactView(generic.TemplateView):
+    template_name = "contacts.html"
+    success_url = reverse_lazy("contact-page")
 
 
 

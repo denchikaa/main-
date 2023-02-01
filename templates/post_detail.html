@@ -1,10 +1,34 @@
 {% extends 'base.html'%} 
-
 {% block content%}
 
 
-    <h1>{{ post.title}}</h1>
-    <p>{{ post.content}}</p>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <h6>{{ post.created }}</h6>
+
+    <hr>
+    {% if post.post_comment.all %}
+       <h4>Комментрии:</h4>
+       <hr>
+    {% endif %}   
+
+
+    
+    {% for comment in post.post_comment.all %}
+        <h3>{{ comment.name }}</h3>
+        <p>{{ comment.text }}</p>
+        <h6>{{ comment.created }}</h6>
+        <hr>
+
+    {% endfor %}
+
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p}}
+
+        <input type="submit" value="Оставить комментарий">
+    </form>
+    <hr>
+
 
 
     <form action="{% url 'post-delete' post.id %}" method="post">{% csrf_token %}
