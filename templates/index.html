@@ -4,22 +4,17 @@
 <h1>Hello</h1> 
 
 {% for post in posts %}
-    <a href="{% url 'post-detail' post.id %}">{{post.title}}</a>
+   <a href="{% url 'post-detail' post.id %}">{{post.title}}</a>
+   <br>
 {%endfor%}
-    
+   <br>      
+   <form action = "{% url 'post-create' %}" method = "get">{%csrf_token%}
+   
+       <button type="submit"> Создать пост</button>
+   </form>
 
-  
-<br>
+<br>   
 <a href="{% url 'about-page' %}">О нас</a>
-<br>
-
-
 <a href="{% url 'contacts' %}">Наши контакты</a>
-
-<form action = "{% url 'post-create' %}" method = "get">{%csrf_token%}
-    {{ form.as_p}}
-    <button type="submit"> Создать пост</button>
-</form>
-
 
 {% endblock %}    
