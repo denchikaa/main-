@@ -15,7 +15,7 @@ class IndexView(generic.ListView):
 class PostDetailView(generic.DetailView):
     model = Post
     context_object_name = "post"
-    template_name = "post_detail.html"
+    template_name = "posts/post_detail.html"
     extra_context = {"form":CommentForm}
 
     # def get_context_data(self, **kwargs):
@@ -48,7 +48,7 @@ class PostDetailView(generic.DetailView):
 
 class PostCreateView(generic.CreateView):
     model = Post
-    template_name = "post_create.html"
+    template_name = "posts/post_create.html"
     fields = ["title", "content"] 
     success_url = reverse_lazy("main-page")   
 
@@ -60,7 +60,7 @@ class PostDeleteView(generic.DeleteView):
 
 class PostUpdateView(generic.UpdateView):
     model = Post
-    template_name = "post_update.html"
+    template_name = "posts/post_update.html"
     fields = ["title", "content"]
     success_url = reverse_lazy("main-page")
     form_class = PostForm
